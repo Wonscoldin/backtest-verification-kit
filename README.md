@@ -14,6 +14,7 @@ It was extracted from a private operations repository, so the history here is sh
 1. **One signal, several rulebooks.** The same signals have run on evaluation accounts at three prop firms with different rules. Several of the largest changes in expected money came from modelling those rules correctly, not from better signals — e.g. capping correlated metals at two: breach days 1 → 0, EV +16–66%. ([details](docs/CONSTRAINTS.md))
 2. **A good-looking number is usually a measurement bug.** Eleven bugs that inflated results, each with its error size and the rule that now prevents it — e.g. +0.44% per trade that was really −0.91%. ([details](docs/INCIDENTS.md))
 3. **Live costs are measured every week.** 106 orders, 7.7bp round trip vs 11bp assumed in the backtest. ([details](docs/SAMPLE_LIVE_REPORT.md))
+4. **Run like a small trading company, by one person.** ~30 containers, ~40 scheduled jobs, two execution venues, five monitoring layers and a one-command deploy that dry-runs every changed service before approving it. Four real production modules are included with their tests. ([architecture](docs/ARCHITECTURE.md))
 
 ![Same rules, random entry days vs the signal](docs/img/null.png)
 
@@ -26,6 +27,7 @@ public data ──► canonical run() ──► random-entry null ──► EV b
 
 ## Start here
 
+0. **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — what the full live system looks like, and the incident behind each part.
 1. **[docs/CONSTRAINTS.md](docs/CONSTRAINTS.md)** — one signal, several rulebooks: how prop-firm evaluation accounts work, and how each firm's rules (intraday loss limits, swap, spread caps, weekend closures, opposite-position rules) were modelled and decided by expected money.
 2. **[docs/INCIDENTS.md](docs/INCIDENTS.md)** — eleven measurement bugs that made results look better than they were, how large each error was, and the rule that now prevents it.
 3. **[docs/DEEP_DIVE_same_bar.md](docs/DEEP_DIVE_same_bar.md)** — one of them in detail: the trade that fills and is stopped in the same bar (+0.44% → −0.91% per trade).
@@ -41,6 +43,7 @@ public data ──► canonical run() ──► random-entry null ──► EV b
 | `verify/ev.py` | Expected wealth over 3 years (20-day block bootstrap, a Monte Carlo over return blocks), per window, and with the best day removed. |
 | `verify/walkforward.py` | Anchored walk-forward: parameters chosen only with past data, scored by EV; reports the out-of-sample / in-sample ratio and flags choices on the grid edge. |
 | `verify/exec_quality.py` | Live cost vs the backtest assumption — with the reference-price rules that once turned an 8bp cost into a fake 15bp. |
+| `production/` | **Real live modules** (maker-first exits, execution cost, implementation shortfall, live-vs-backtest skip check) — comments translated and identifiers replaced, logic unchanged. See [ARCHITECTURE](docs/ARCHITECTURE.md). |
 | `docs/PREREG_TEMPLATE.md` | Criteria are fixed before measuring; every attempt is counted. |
 | `tests/` | Each test locks a rule whose violation once inflated a real result (bar order, gap fills, look-ahead, null sampling, causality of walk-forward slicing). |
 
