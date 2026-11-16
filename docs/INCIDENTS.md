@@ -6,7 +6,8 @@ Every fix became a rule in the simulator and, where possible, a test that fails 
 
 ### Context: what "pass rate" means here
 
-Part of the portfolio runs on **funded-trader evaluation accounts** (prop-firm style). They come with hard
+Part of the portfolio runs on **funded-trader evaluation accounts** (prop-firm style; how they work and each
+firm's limits are in [CONSTRAINTS.md](CONSTRAINTS.md#how-a-prop-firm-evaluation-works)). They come with hard
 rules: for example, losing more than 5% of the starting balance within one day, or 10% in total, ends the
 account immediately — **including intraday, on unrealised losses**. A strategy is only useful there if its
 equity path never touches those lines.

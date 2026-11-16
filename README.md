@@ -20,10 +20,10 @@ public data ──► canonical run() ──► random-entry null ──► EV b
 
 ## Start here
 
-0. **[docs/CONSTRAINTS.md](docs/CONSTRAINTS.md)** — one signal, several rulebooks: how each account's rules (intraday loss limits, swap, spread caps, weekend closures, opposite-position rules) were modelled and decided by expected money.
-1. **[docs/INCIDENTS.md](docs/INCIDENTS.md)** — eleven measurement bugs that made results look better than they were, how large each error was, and the rule that now prevents it.
-2. **[docs/DEEP_DIVE_same_bar.md](docs/DEEP_DIVE_same_bar.md)** — one of them in detail: the trade that fills and is stopped in the same bar (+0.44% → −0.91% per trade).
-3. **[docs/SAMPLE_LIVE_REPORT.md](docs/SAMPLE_LIVE_REPORT.md)** — what the live execution-cost report looks like (7.7bp round trip vs 11bp assumed).
+1. **[docs/CONSTRAINTS.md](docs/CONSTRAINTS.md)** — one signal, several rulebooks: how prop-firm evaluation accounts work, and how each firm's rules (intraday loss limits, swap, spread caps, weekend closures, opposite-position rules) were modelled and decided by expected money.
+2. **[docs/INCIDENTS.md](docs/INCIDENTS.md)** — eleven measurement bugs that made results look better than they were, how large each error was, and the rule that now prevents it.
+3. **[docs/DEEP_DIVE_same_bar.md](docs/DEEP_DIVE_same_bar.md)** — one of them in detail: the trade that fills and is stopped in the same bar (+0.44% → −0.91% per trade).
+4. **[docs/SAMPLE_LIVE_REPORT.md](docs/SAMPLE_LIVE_REPORT.md)** — what the live execution-cost report looks like (7.7bp round trip vs 11bp assumed).
 
 ## What is in here
 
@@ -72,9 +72,17 @@ result mostly depends on a few days. That is the kind of sentence a verification
 * Weekly execution-cost and implementation-shortfall reports.
 * A research ledger of 70+ rejected strategy families, a pre-registration budget, and a research moratorium when results started driving too many changes.
 
+## Limitations
+
+* Every backtest number in these docs is **in-sample**. Planning values were discounted by walk-forward ratios, and the
+  share of the Sharpe ratio that is not luck was estimated with a deflated-Sharpe haircut over all attempts (roughly 30–50%).
+* The live track record is short (live since August 2026); a few months cannot separate a weak edge from a bad stretch.
+* The example strategy uses today's coin list (survivorship) and daily bars; see `KNOWN_OPTIMISM` in `verify/spec.py`.
+* Nothing here is investment advice.
+
 ## Author
 
-노원석 · Soongsil University · built and operates the system above on my own.
+**Wonseok Roh (노원석)** · Soongsil University · built and operates the system above on my own.
 Open to internships in quant research, trading infrastructure or data engineering.
 GitHub [@Wonscoldin](https://github.com/Wonscoldin)
 

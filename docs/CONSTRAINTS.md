@@ -1,9 +1,29 @@
 # One signal, several rulebooks
 
-The same family of signals runs on a crypto exchange account and on several funded-trader evaluation
-accounts from different firms (A, B, C below). Each firm has its own rulebook: loss limits, swap schedules,
+The same family of signals runs on a crypto exchange account (own capital) and on funded-trader evaluation
+accounts from three prop firms (A, B, C below). Each firm has its own rulebook: loss limits, swap schedules,
 spreads, trading hours, position-size caps, and rules about opposite positions. A backtest that ignores
 any one of them is measuring a different game.
+
+## How a prop-firm evaluation works
+
+1. Pay a fee and trade a firm-provided account (CFDs on gold, silver, indices and crypto through a
+   MetaTrader-style broker), usually in **two phases with profit targets** (e.g. +10%, then +5%).
+2. Throughout, never breach the **loss limits**. They are checked continuously, **intraday and on unrealised
+   losses**; one touch ends the account and the fee is lost.
+3. Pass both phases and the account becomes **funded**: the firm pays out a share (typically ~80%) of the
+   profits, and the same loss limits keep applying for as long as the account lives.
+
+| | Daily loss limit | Total loss limit | Notes that mattered for the model |
+|---|---|---|---|
+| Firm A | 5% | 10% | swap charged on gold/index CFDs; live code skips symbols whose spread is too wide |
+| Firm B | 5% | 10% | closed on weekends; no opposite positions on the same symbol |
+| Firm C | **4%** | **6%** | the tightest limits; broker swap far above typical rates; per-order lot caps |
+
+So the objective is not "maximise return" and not "maximise pass rate". It is **expected money over
+three years**: payouts × the probability that the account survives, minus fees for the attempts that fail.
+The private backtest computes that directly (fees, phases, payouts); `verify/ev.py` here shows the
+block-bootstrap core of it. Every decision below is judged by EV first and only then by the pass rate.
 
 The pattern for every rule was the same:
 1. **Model the rule in the one canonical simulator** (not in a side script).
