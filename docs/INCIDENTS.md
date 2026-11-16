@@ -4,10 +4,29 @@ Each one happened while I was running a live, automated, multi-strategy portfoli
 The pattern is almost always the same: **a good-looking number is usually a measurement bug.**
 Every fix became a rule in the simulator and, where possible, a test that fails if the bug returns.
 
+### Context: what "pass rate" means here
+
+Part of the portfolio runs on **funded-trader evaluation accounts** (prop-firm style). They come with hard
+rules: for example, losing more than 5% of the starting balance within one day, or 10% in total, ends the
+account immediately — **including intraday, on unrealised losses**. A strategy is only useful there if its
+equity path never touches those lines.
+
+So for these accounts the backtest reports a **pass rate**: the share of simulated start dates (with
+randomised fills) on which the account would have survived the evaluation. Three consequences drive several
+incidents below:
+
+* The rule is checked on the **path inside the day**, so a simulator that only looks at daily closes is
+  measuring a different, easier game.
+* The pass rate is a **step function of a few days**: one gap day in the window fails the whole run, so
+  "98% vs 86%" is often one or two days, not a gradual difference. Count the breach days before arguing
+  about half a percentage point.
+* It is an intermediate metric. Sizing is still decided by expected money (see `verify/ev.py`): maximising
+  the pass rate alone simply trades too small.
+
 | # | What looked good | What was actually wrong | Size of the error | Rule / test now |
 |---|---|---|---|---|
-| 1 | Daily-loss-limit pass rate ~98% | Drawdown was checked on **daily closes**. Intraday the account had already breached the limit. | pass rate 97.6% → **76.0%** | Judge limits on the intraday path, never the close |
-| 2 | Same strategy on gold/indices | Those assets were measured on **daily close** while crypto used hourly bars; one gap day decides the outcome. | 98.6% → **86.0%** | Every asset on the same intraday resolution |
+| 1 | Evaluation pass rate ~98% | The daily-loss rule was checked on **daily closes**. Intraday, many paths had already crossed the limit — which ends the account. | pass rate 97.6% → **76.0%** | Judge limits on the intraday path, never the close |
+| 2 | Pass rate with gold/indices added | Those assets were measured on **daily closes** while crypto used hourly bars. One day when silver and gold fell together intraday decided most of the difference. | 98.6% → **86.0%** | Every asset on the same intraday resolution |
 | 3 | Pullback-limit entry "+0.44% per trade" | The research loop checked `close < stop → discard` **before** `low ≤ limit → fill`, so every bar that filled *and* stopped (the worst trades) vanished. | **+0.44% → −0.91%**, 0th percentile vs random | Fill first, then stop — `test_limit_fill_and_stop_in_same_bar_is_kept_as_a_loss` |
 | 4 | Multi-strategy portfolio | Same-day entries were processed in **alphabetical order of strategy name**, letting an afternoon order take a slot before a midnight one. | planning return cut by ~30% after fixing | Fixed, documented processing order |
 | 5 | Holding period of 5 bars | Bars were counted as **calendar days** for weekday-only assets: positions were closed 2 days early, and the sim re-entered while the real position would still be open. | CAGR −1.5 to −6.6 points across accounts | Hold counted in the asset's own bars, plus a calendar test |

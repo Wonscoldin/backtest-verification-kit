@@ -66,6 +66,7 @@ result mostly depends on a few days. That is the kind of sentence a verification
 ## The live system this comes from (not included)
 
 * Several strategies across crypto perpetuals and gold/index markets, running unattended on two servers that watch each other.
+* Part of it on funded-trader evaluation accounts (prop-firm style) with hard daily and total loss limits checked intraday — which is why the backtest reports a **pass rate** next to returns ([context](docs/INCIDENTS.md#context-what-pass-rate-means-here)).
 * Daily live-vs-backtest parity check: every skipped signal must carry a reason the backtest knows.
 * Weekly execution-cost and implementation-shortfall reports.
 * A research ledger of 70+ rejected strategy families, a pre-registration budget, and a research moratorium when results started driving too many changes.
@@ -89,6 +90,7 @@ GitHub [@Wonscoldin](https://github.com/Wonscoldin)
 - **기대 자산(EV)**: 블록 부트스트랩, 세 구간 + 최고의 하루 제외.
 - **워크포워드**: 과거 데이터만으로 파라미터를 고르고, 표본 밖/표본 안 비율로 낙관을 깎음.
 - **실행비용 실측**: 손절은 트리거 가격 기준으로 슬리피지 측정 (실거래 왕복 7.7bp vs 가정 11bp).
+- **통과율**: 일부는 하루·전체 손실 한도가 장중 기준으로 걸린 펀디드 트레이더 평가 계좌(프랍)에서 운용합니다. 한도를 한 번이라도 넘으면 계좌가 끝나기 때문에, 수익률 옆에 '그 경로가 한도에 안 닿을 확률'을 같이 잽니다.
 - **사고 기록 11건** (`docs/INCIDENTS.md`): 결과를 부풀린 측정 버그와 오차 크기, 재발 방지 규칙.
 
 License: MIT
