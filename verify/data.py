@@ -30,7 +30,7 @@ def load_daily(symbol: str, start: str = "2019-01-01", cache_dir: str = "data", 
     df = pd.DataFrame([x[:6] for x in rows], columns=COLS)
     df.index = pd.to_datetime(df.pop("open_time"), unit="ms", utc=True).dt.tz_localize(None)
     df = df.astype(float)
-    df = df[df.index < pd.Timestamp.utcnow().tz_localize(None).normalize()]   # drop the unfinished bar
+    df = df[df.index < pd.Timestamp.now("UTC").tz_localize(None).normalize()]   # drop the unfinished bar
     os.makedirs(cache_dir, exist_ok=True)
     df.to_csv(path)
     return df

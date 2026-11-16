@@ -82,7 +82,11 @@ def symbol_trades(sym: str, df: pd.DataFrame, entry_lookback: int, atr_len: int,
 
 def portfolio(trades: List[Trade], closes: Dict[str, pd.Series], cost_rt: float, risk: float, max_pos: int,
               order: tuple) -> tuple:
-    """Risk-based sizing, max concurrent positions, daily mark-to-market equity curve."""
+    """Risk-based sizing, max concurrent positions, daily mark-to-market equity curve.
+
+    Each position is capped at 50% of equity, so with `max_pos` > 2 the book can exceed 1x (cash goes negative,
+    i.e. margin, as on a perpetuals account). Funding/borrow on that margin is not charged -- see KNOWN_OPTIMISM.
+    """
     rank = {s: i for i, s in enumerate(order)}
     by_day: Dict[pd.Timestamp, List[Trade]] = {}
     for tr in sorted(trades, key=lambda x: (x.entry_day, rank.get(x.symbol, 1e9))):

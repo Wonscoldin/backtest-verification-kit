@@ -11,8 +11,8 @@ It was extracted from a private operations repository, so the history here is sh
 
 ## In 30 seconds
 
-1. **One signal, several rulebooks.** The same signals run on evaluation accounts at three prop firms with different rules. Modelling the rules correctly moved expected money more than better signals did — e.g. capping correlated metals at two: breach days 1 → 0, EV +16–66%. ([details](docs/CONSTRAINTS.md))
-2. **A good-looking number is usually a measurement bug.** Eleven bugs that inflated results, each with its error size and a test that fails if it returns — e.g. +0.44% per trade that was really −0.91%. ([details](docs/INCIDENTS.md))
+1. **One signal, several rulebooks.** The same signals have run on evaluation accounts at three prop firms with different rules. Several of the largest changes in expected money came from modelling those rules correctly, not from better signals — e.g. capping correlated metals at two: breach days 1 → 0, EV +16–66%. ([details](docs/CONSTRAINTS.md))
+2. **A good-looking number is usually a measurement bug.** Eleven bugs that inflated results, each with its error size and the rule that now prevents it — e.g. +0.44% per trade that was really −0.91%. ([details](docs/INCIDENTS.md))
 3. **Live costs are measured every week.** 106 orders, 7.7bp round trip vs 11bp assumed in the backtest. ([details](docs/SAMPLE_LIVE_REPORT.md))
 
 ![Same rules, random entry days vs the signal](docs/img/null.png)
@@ -72,7 +72,7 @@ result mostly depends on a few days. That is the kind of sentence a verification
 
 ## The live system this comes from (not included)
 
-* Several strategies across crypto perpetuals and gold/index markets, running unattended on two servers that watch each other.
+* Several strategies across crypto perpetuals and gold/index markets, running unattended on cloud servers with automated health checks and alerts.
 * Part of it on funded-trader evaluation accounts (prop-firm style) with hard daily and total loss limits checked intraday — which is why the backtest reports a **pass rate** next to returns ([context](docs/INCIDENTS.md#context-what-pass-rate-means-here)).
 * Daily live-vs-backtest parity check: every skipped signal must carry a reason the backtest knows.
 * Weekly execution-cost and implementation-shortfall reports.
@@ -88,7 +88,7 @@ result mostly depends on a few days. That is the kind of sentence a verification
 
 ## Author
 
-**Wonseok Roh (노원석)** · Soongsil University · built and operates the system above on my own.
+**Wonseok Roh (노원석)** · Soongsil University · designed and operates the system above.
 Open to internships in quant research, trading infrastructure or data engineering.
 GitHub [@Wonscoldin](https://github.com/Wonscoldin)
 

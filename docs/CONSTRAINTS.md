@@ -1,7 +1,7 @@
 # One signal, several rulebooks
 
-The same family of signals runs on a crypto exchange account (own capital) and on funded-trader evaluation
-accounts from three prop firms (A, B, C below). Each firm has its own rulebook: loss limits, swap schedules,
+The same family of signals has run on a crypto exchange account (own capital) and on funded-trader evaluation
+accounts from three prop firms (A, B, C below; the firm C account has since ended). Each firm has its own rulebook: loss limits, swap schedules,
 spreads, trading hours, position-size caps, and rules about opposite positions. A backtest that ignores
 any one of them is measuring a different game.
 
