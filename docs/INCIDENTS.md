@@ -15,7 +15,8 @@ Every fix became a rule in the simulator and, where possible, a test that fails 
 | 7 | 8-signal combination, holdout Sharpe 1.36 | The 8 signals were chosen **after** looking at holdout numbers. Adding 10 unseen signals collapsed it. | **1.36 → 0.08** | Pre-registration: criteria fixed before measuring, every attempt counted |
 | 8 | Live execution cost 15.3bp round trip | Stop fills were compared with the **mark price** instead of the **trigger price** the backtest assumes. | real cost **8.0bp** vs 11bp assumed | `exec_quality.py` reference-price rules |
 | 9 | "Coverage" gate passed | A gate of "fills ≥10% of empty days" was passed by a strategy that was simply long 91% of the time. | gate had zero discriminating power | Gates are percentiles against a random null, not absolute numbers |
-| 10 | `pytest | tail` → exit 0 | The pipeline returned **tail's** exit code; one test had failed. | a broken check almost shipped | Capture the real exit code; never judge on truncated output |
+| 10 | `pytest \| tail` → exit 0 | The pipeline returned **tail's** exit code; one test had failed. | a broken check almost shipped | Capture the real exit code; never judge on truncated output |
+| 11 | This kit's own random null | Found while reviewing this repo: the null drew 2n random days, sorted them and kept the **first n** trades, so random entries bunched into the early years (34% in the second half instead of 50%). | null mean +2.76% → **+1.87%** per trade | `test_null_entries_are_spread_over_the_whole_sample` |
 
 ## Habits these produced
 

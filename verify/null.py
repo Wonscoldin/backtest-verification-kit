@@ -34,8 +34,11 @@ def random_null(data: Dict[str, pd.DataFrame], n_draws: int = 2000, seed: int = 
             n = len(real[s])
             if n == 0:
                 continue
-            days = rng.choice(np.arange(warm, len(df) - 1), size=n * 2, replace=False)
-            pool += symbol_trades(s, df, entry_days=np.sort(days), **p)[:n]
+            days = rng.choice(np.arange(warm, len(df) - 1), size=min(n * 3, len(df) - 1 - warm), replace=False)
+            cand = symbol_trades(s, df, entry_days=np.sort(days), **p)
+            # pick n of them at random -- taking the FIRST n would bunch the null into the early part of the sample
+            pool += [cand[i] for i in rng.choice(len(cand), size=min(n, len(cand)), replace=False)]
         draws[k] = mean_trade_return(pool, cost_rt)
     return dict(actual=actual, null_mean=float(np.nanmean(draws)), null_sd=float(np.nanstd(draws)),
-                percentile=float((draws < actual).mean() * 100), draws=draws)
+                percentile=float((draws < actual).mean() * 100), draws=draws,
+                last_draw_entries=[t.entry_day for t in pool])

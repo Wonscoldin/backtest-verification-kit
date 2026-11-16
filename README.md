@@ -22,7 +22,7 @@ public data ──► canonical run() ──► random-entry null ──► EV b
 | `verify/null.py` | Random-entry null that shares every rule except *when* to enter. Gates are percentiles against it. |
 | `verify/ev.py` | Expected wealth over 3 years (20-day block bootstrap), per window, and with the best day removed. |
 | `verify/exec_quality.py` | Live cost vs the backtest assumption — with the reference-price rules that once turned an 8bp cost into a fake 15bp. |
-| `docs/INCIDENTS.md` | **Ten measurement bugs** that made results look better than they were, how big each error was, and the rule that now prevents it. |
+| `docs/INCIDENTS.md` | **Eleven measurement bugs** that made results look better than they were, how big each error was, and the rule that now prevents it. |
 | `docs/PREREG_TEMPLATE.md` | Criteria are fixed before measuring; every attempt is counted. |
 | `tests/` | Each test locks a rule whose violation once inflated a real result. |
 
@@ -38,7 +38,7 @@ Example output (in-sample, includes the 2020–21 bull market — not a performa
 
 ```
 CAGR 28.4% | MDD -14.4% | trades 304
-Random-entry null: actual +6.64%/trade vs null +2.76 +/- 1.07 -> 100.0 percentile
+Random-entry null: actual +6.64%/trade vs null +1.87 +/- 0.99 -> 100.0 percentile
 3-year EV: all 2.26x | 2024+ 1.63x | 2025+ 1.17x  (best day removed: 2.13 / 1.52 / 1.04)
 ```
 
@@ -65,6 +65,6 @@ sentence a verification step should produce.
 - **무작위 진입 귀무**: 진입 시점만 무작위로 바꾸고 나머지 규칙은 같게 해서 백분위로 판정.
 - **기대 자산(EV)**: 세 구간 + 최고의 하루 제외.
 - **실행비용 실측**: 손절은 트리거 가격 기준으로 슬리피지 측정.
-- **사고 기록 10건** (`docs/INCIDENTS.md`): 결과를 부풀린 측정 버그와 오차 크기, 재발 방지 규칙.
+- **사고 기록 11건** (`docs/INCIDENTS.md`): 결과를 부풀린 측정 버그와 오차 크기, 재발 방지 규칙.
 
 License: MIT
