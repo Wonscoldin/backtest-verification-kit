@@ -1,7 +1,7 @@
 # backtest-verification-kit
 
 **How I check that a backtest is telling the truth** — distilled from running a live, fully automated
-multi-strategy crypto portfolio.
+multi-strategy, multi-asset portfolio (crypto, gold, silver, equity indices).
 
 This repository is about *verification*, not about an edge. The example strategy is a textbook
 Donchian breakout on public Binance data; my live strategies, parameters and accounts are not here.
@@ -57,7 +57,7 @@ sentence a verification step should produce.
 
 ## 한국어 요약
 
-**백테스트가 진짜인지 검증하는 방법**을, 실제로 자동매매 포트폴리오를 운영하며 정리한 저장소입니다.
+**백테스트가 진짜인지 검증하는 방법**을, 크립토·금·은·주가지수에 걸친 멀티에셋 자동매매 포트폴리오를 실제로 운영하며 정리한 저장소입니다.
 전략 자체(엣지)가 아니라 **검증 절차**가 주제입니다. 예시 전략은 교과서식 돈치안 돌파이고, 실제 운용 전략·파라미터·계좌는 포함하지 않습니다.
 
 - **하나의 정본 시뮬레이터**: 설정은 `spec.py` 한 곳, 변형은 `run()` 인자로만.

@@ -1,6 +1,6 @@
 # Incidents: measurement bugs that made results look better than they were
 
-Each one happened while I was running a live, automated, multi-strategy crypto portfolio (2026).
+Each one happened while I was running a live, automated, multi-strategy portfolio across crypto, gold, silver and equity indices (2026).
 The pattern is almost always the same: **a good-looking number is usually a measurement bug.**
 Every fix became a rule in the simulator and, where possible, a test that fails if the bug returns.
 
