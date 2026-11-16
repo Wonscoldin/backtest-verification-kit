@@ -20,6 +20,7 @@ public data ──► canonical run() ──► random-entry null ──► EV b
 
 ## Start here
 
+0. **[docs/CONSTRAINTS.md](docs/CONSTRAINTS.md)** — one signal, several rulebooks: how each account's rules (intraday loss limits, swap, spread caps, weekend closures, opposite-position rules) were modelled and decided by expected money.
 1. **[docs/INCIDENTS.md](docs/INCIDENTS.md)** — eleven measurement bugs that made results look better than they were, how large each error was, and the rule that now prevents it.
 2. **[docs/DEEP_DIVE_same_bar.md](docs/DEEP_DIVE_same_bar.md)** — one of them in detail: the trade that fills and is stopped in the same bar (+0.44% → −0.91% per trade).
 3. **[docs/SAMPLE_LIVE_REPORT.md](docs/SAMPLE_LIVE_REPORT.md)** — what the live execution-cost report looks like (7.7bp round trip vs 11bp assumed).
@@ -91,6 +92,7 @@ GitHub [@Wonscoldin](https://github.com/Wonscoldin)
 - **워크포워드**: 과거 데이터만으로 파라미터를 고르고, 표본 밖/표본 안 비율로 낙관을 깎음.
 - **실행비용 실측**: 손절은 트리거 가격 기준으로 슬리피지 측정 (실거래 왕복 7.7bp vs 가정 11bp).
 - **통과율**: 일부는 하루·전체 손실 한도가 장중 기준으로 걸린 펀디드 트레이더 평가 계좌(프랍)에서 운용합니다. 한도를 한 번이라도 넘으면 계좌가 끝나기 때문에, 수익률 옆에 '그 경로가 한도에 안 닿을 확률'을 같이 잽니다.
+- **계좌별 규칙 대응** (`docs/CONSTRAINTS.md`): 같은 신호를 규칙이 다른 여러 계좌에서 운용. 장중 손실 한도, 귀금속 동시보유 상한, 스왑 vs 스프레드 롤오버 판단, 주말 휴장, 같은 종목 반대 포지션 금지 등을 정본에 모델링하고 기대 수익으로 판정.
 - **사고 기록 11건** (`docs/INCIDENTS.md`): 결과를 부풀린 측정 버그와 오차 크기, 재발 방지 규칙.
 
 License: MIT
