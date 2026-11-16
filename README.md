@@ -14,7 +14,7 @@ It was extracted from a private operations repository, so the history here is sh
 1. **One signal, several rulebooks.** The same signals have run on evaluation accounts at three prop firms with different rules. Several of the largest changes in expected money came from modelling those rules correctly, not from better signals — e.g. capping correlated metals at two: breach days 1 → 0, EV +16–66%. ([details](docs/CONSTRAINTS.md))
 2. **A good-looking number is usually a measurement bug.** Eleven bugs that inflated results, each with its error size and the rule that now prevents it — e.g. +0.44% per trade that was really −0.91%. ([details](docs/INCIDENTS.md))
 3. **Live costs are measured every week.** 106 orders, 7.7bp round trip vs 11bp assumed in the backtest. ([details](docs/SAMPLE_LIVE_REPORT.md))
-4. **Run like a small trading company, by one person.** ~30 containers, ~40 scheduled jobs, two execution venues, five monitoring layers and a one-command deploy that dry-runs every changed service before approving it. Four real production modules are included with their tests. ([architecture](docs/ARCHITECTURE.md))
+4. **Run like a small trading company, by one person.** ~30 containers, ~40 scheduled jobs, two execution venues, five monitoring layers, ~4,300 tests (one incident, one test) and a one-command deploy that dry-runs every changed service before approving it. Four real production modules are included with their tests. ([architecture](docs/ARCHITECTURE.md))
 
 ![Same rules, random entry days vs the signal](docs/img/null.png)
 

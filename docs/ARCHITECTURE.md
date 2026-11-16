@@ -34,7 +34,13 @@ contains strategy parameters (the edge) and account/infrastructure details.
 * **~40 scheduled jobs**: monitors, reports, evidence export, savings sweep, cross-server checks.
 * Two execution venues with different mechanics: a crypto exchange over REST, and prop-firm accounts through
   MetaTrader terminals driven by a custom Expert Advisor.
-* One deploy command for all of it, and a test suite that must pass before anything ships.
+* Modules: about 100 for live execution and risk, 70 shared engine, 65 for the canonical backtest, 80 operations scripts
+  (deploy, monitors, reports), plus the MetaTrader Expert Advisor.
+* **About 4,300 tests** that run before every deploy. The rule is one incident, one test: a defect is not closed until
+  a test fails when it comes back.
+* One deploy command for all of it.
+
+The public repository holds a small, representative slice (four production modules and their tests).
 
 ## Parts
 
