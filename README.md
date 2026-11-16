@@ -1,6 +1,6 @@
 # backtest-verification-kit
 
-[![tests](https://github.com/Wonscoldin/backtest-verification-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/Wonscoldin/backtest-verification-kit/actions/workflows/tests.yml)
+[![tests](https://github.com/Wonscoldin/backtest-verification-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/Wonscoldin/backtest-verification-kit/actions/workflows/tests.yml) · [한국어](README.ko.md)
 
 **How I check that a backtest is telling the truth** — distilled from running a live, fully automated
 multi-strategy, multi-asset portfolio (crypto, gold, silver, equity indices).
@@ -8,6 +8,12 @@ multi-strategy, multi-asset portfolio (crypto, gold, silver, equity indices).
 This repository is about *verification*, not about an edge. The example strategy is a textbook
 Donchian breakout on public Binance data; my live strategies, parameters and accounts are not here.
 It was extracted from a private operations repository, so the history here is short.
+
+## In 30 seconds
+
+1. **One signal, several rulebooks.** The same signals run on evaluation accounts at three prop firms with different rules. Modelling the rules correctly moved expected money more than better signals did — e.g. capping correlated metals at two: breach days 1 → 0, EV +16–66%. ([details](docs/CONSTRAINTS.md))
+2. **A good-looking number is usually a measurement bug.** Eleven bugs that inflated results, each with its error size and a test that fails if it returns — e.g. +0.44% per trade that was really −0.91%. ([details](docs/INCIDENTS.md))
+3. **Live costs are measured every week.** 106 orders, 7.7bp round trip vs 11bp assumed in the backtest. ([details](docs/SAMPLE_LIVE_REPORT.md))
 
 ![Same rules, random entry days vs the signal](docs/img/null.png)
 
@@ -88,19 +94,6 @@ GitHub [@Wonscoldin](https://github.com/Wonscoldin)
 
 ---
 
-## 한국어 요약
-
-**백테스트가 진짜인지 검증하는 방법**을, 크립토·금·은·주가지수에 걸친 멀티에셋 자동매매 포트폴리오를 실제로 운영하며 정리한 저장소입니다.
-전략 자체(엣지)가 아니라 **검증 절차**가 주제입니다. 예시 전략은 교과서식 돈치안 돌파이고, 실제 운용 전략·파라미터·계좌는 포함하지 않습니다. 비공개 운영 저장소에서 검증 부분만 추려 공개했습니다.
-
-- **하나의 정본 시뮬레이터**: 설정은 `spec.py` 한 곳, 변형은 `run()` 인자로만.
-- **봉 안 순서 규칙**: 체결이 먼저, 손절이 나중. 갭 손절은 시가 체결.
-- **무작위 진입 귀무**: 진입 시점만 무작위로 바꾸고 나머지 규칙은 같게 해서 백분위로 판정.
-- **기대 자산(EV)**: 블록 부트스트랩, 세 구간 + 최고의 하루 제외.
-- **워크포워드**: 과거 데이터만으로 파라미터를 고르고, 표본 밖/표본 안 비율로 낙관을 깎음.
-- **실행비용 실측**: 손절은 트리거 가격 기준으로 슬리피지 측정 (실거래 왕복 7.7bp vs 가정 11bp).
-- **통과율**: 일부는 하루·전체 손실 한도가 장중 기준으로 걸린 펀디드 트레이더 평가 계좌(프랍)에서 운용합니다. 한도를 한 번이라도 넘으면 계좌가 끝나기 때문에, 수익률 옆에 '그 경로가 한도에 안 닿을 확률'을 같이 잽니다.
-- **계좌별 규칙 대응** (`docs/CONSTRAINTS.md`): 같은 신호를 규칙이 다른 여러 계좌에서 운용. 장중 손실 한도, 귀금속 동시보유 상한, 스왑 vs 스프레드 롤오버 판단, 주말 휴장, 같은 종목 반대 포지션 금지 등을 정본에 모델링하고 기대 수익으로 판정.
-- **사고 기록 11건** (`docs/INCIDENTS.md`): 결과를 부풀린 측정 버그와 오차 크기, 재발 방지 규칙.
+한국어판 전체: [README.ko.md](README.ko.md)
 
 License: MIT
